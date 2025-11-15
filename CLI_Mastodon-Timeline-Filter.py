@@ -168,12 +168,14 @@ Erstelle zunächst einen Access Token:
         sys.exit(1)
 
     try:
+        from datetime import timezone
+
         start_date = parse_date(args.start)
         end_date = parse_date(args.end)
 
-        # Setze Uhrzeit für den ganzen Tag
-        start_date = start_date.replace(hour=0, minute=0, second=0)
-        end_date = end_date.replace(hour=23, minute=59, second=59)
+        # Setze Uhrzeit für den ganzen Tag und füge UTC Timezone hinzu
+        start_date = start_date.replace(hour=0, minute=0, second=0, tzinfo=timezone.utc)
+        end_date = end_date.replace(hour=23, minute=59, second=59, tzinfo=timezone.utc)
 
         if start_date > end_date:
             print("Fehler: Startdatum muss vor Enddatum liegen!")
